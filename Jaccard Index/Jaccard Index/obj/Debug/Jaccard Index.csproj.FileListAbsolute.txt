@@ -1,0 +1,6 @@
+c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\bin\Debug\Jaccard Index.exe.config
+c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\bin\Debug\Jaccard Index.exe
+c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\bin\Debug\Jaccard Index.pdb
+c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\obj\Debug\Jaccard Index.csprojResolveAssemblyReference.cache
+c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\obj\Debug\Jaccard Index.exe
+c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\obj\Debug\Jaccard Index.pdb
