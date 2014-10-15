@@ -4,3 +4,6 @@ c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jacc
 c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\obj\Debug\Jaccard Index.csprojResolveAssemblyReference.cache
 c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\obj\Debug\Jaccard Index.exe
 c:\users\дмитрий\documents\visual studio 2013\Projects\Jaccard Index\Jaccard Index\obj\Debug\Jaccard Index.pdb
+D:\Workspace\kreolim.shpora\Jaccard Index\Jaccard Index\bin\Debug\Jaccard Index.exe.config
+D:\Workspace\kreolim.shpora\Jaccard Index\Jaccard Index\obj\Debug\Jaccard Index.exe
+D:\Workspace\kreolim.shpora\Jaccard Index\Jaccard Index\obj\Debug\Jaccard Index.pdb

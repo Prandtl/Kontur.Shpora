@@ -12,14 +12,16 @@ namespace Jaccard_Index
     {
         public string[] Words;
         public int Freq;
+
         public Gram(string[] words, int frequency)
         {
             Words = words;
             Freq = frequency;
         }
+
         public bool SameWords(string[] gram)
         {
-            if (this.Words.Length == gram.Length)
+            if (this.Words.Length == gram.Length) //this не нужен
             {
                 for (int i = 0; i < gram.Length; i++)
                 {
@@ -30,20 +32,38 @@ namespace Jaccard_Index
                 }
                 return true;
             }
-            else
+            else //тут else не нужен.
                 return false;
         }
-    }
-    class Program
-    {
-        static string[][] Sentence2Grams(string[] sentence, int size)
+
+        /*
+         * Так как курс по Linq почему бы и не использовать Linq?
+         */
+
+        public bool SameWordsLINQ(string[] gram)
         {
-            string[] filteredSentence = sentence.Where(word => word != "").ToArray();
+            if (Words.Length == gram.Length)
+            {
+                return !gram.Where((t, i) => Words[i] != t).Any();
+            }
+            return false;
+        }
+    }
+
+    internal class Program
+    {   
+        /*Ниже штука которая переводит предложение в Граммы. судя по названию.
+         * Почему она возвращает двумерный массив строк не очень очевидно
+         */
+        private static string[][] Sentence2Grams(string[] sentence, int size)//Можно было IENumerable<string[]> вернуть..
+        {
+            string[] filteredSentence = sentence.Where(word => word != "").ToArray();//var.
             if (size > filteredSentence.Length)
             {
-                return new string[][] { new string[] { } };
+                return new string[][] {new string[] {}};//!?!?!?
             }
-            else
+            else//else опять же не нужен. 
+                //Да, это как бы не то чтобы важно. Но у меня вел чувак из Контура, он к этому придирался
             {
                 int length = filteredSentence.Length - size + 1;
                 string[][] result = new string[length][];
@@ -58,7 +78,16 @@ namespace Jaccard_Index
                 return result;
             }
         }
-        static Gram[] GramsWithFrequency(string text, int size)
+
+        //Maybe LINQ? 
+
+
+        /*
+         * А вот этот метод мне нравится.
+         * его может и можно изменить, но в целом - LINQ, понятно что происходит и комментарии конечно же!
+         * Это круто.
+         */
+        private static Gram[] GramsWithFrequency(string text, int size)
         {
             Gram[] gramsAndFreq = text
                 //Split into sentences
@@ -72,9 +101,10 @@ namespace Jaccard_Index
                 .ToArray();
             return gramsAndFreq;
         }
-        static int Frequency(Gram[] textByGrams, string[] words)
+
+        private static int Frequency(Gram[] textByGrams, string[] words)
         {
-            if (textByGrams.Where(gram => gram.SameWords(words)).Count() == 0)
+            if (textByGrams.Where(gram => gram.SameWords(words)).Count() == 0)//Any()
             {
                 return 0;
             }
@@ -83,20 +113,15 @@ namespace Jaccard_Index
                 return textByGrams.Where(gram => gram.SameWords(words)).First().Freq;
             }
         }
-        static List<Tuple<string[], int, int>> Merge(Gram[] firstGrams, Gram[] secondGrams)
+
+        private static List<Tuple<string[], int, int>> Merge(Gram[] firstGrams, Gram[] secondGrams)
         {
-            List<Tuple<string[], int, int>> result = new List<Tuple<string[], int, int>>();
-            foreach (var gram in firstGrams)
-            {
-                result.Add(Tuple.Create(gram.Words, gram.Freq, Frequency(secondGrams, gram.Words)));
-            }
-            foreach (var gram in secondGrams)
-            {
-                result.Add(Tuple.Create(gram.Words, Frequency(firstGrams, gram.Words), gram.Freq));
-            }
+            List<Tuple<string[], int, int>> result = firstGrams.Select(gram => Tuple.Create(gram.Words, gram.Freq, Frequency(secondGrams, gram.Words))).ToList();//var.
+            result.AddRange(secondGrams.Select(gram => Tuple.Create(gram.Words, Frequency(firstGrams, gram.Words), gram.Freq)));
             return result.Distinct().ToList();
         }
-        static void Main(string[] args)
+
+        private static void Main(string[] args)
         {
             string firstText = File.ReadAllText(args[0]);
             string secondText = File.ReadAllText(args[1]);
@@ -113,10 +138,20 @@ namespace Jaccard_Index
                 common += Math.Min(gram.Item2, gram.Item3);
                 total += Math.Max(gram.Item2, gram.Item3);
             }
-            double jaccarIndex = common / total;
+            double jaccarIndex = common/total;
             Console.WriteLine(countGramsOfFirst);
             Console.WriteLine(countGramsOfSecond);
             Console.WriteLine(jaccarIndex);
+            /*All-in-all
+             * ну критичные места я показал, а похожие ты сможешь найти.
+             * Хотелось бы больше логики жесткой.
+             * Ну например есть методы которые вроде бы относятся к классу Грамм а реализованы в Program.
+             * больше LINQ.
+             * больше var.
+             * Поставь Resharper - он выделяет подобные тонкие места и умеет сам их преобразовывать.
+             * О правильности вычислений не буду судить.
+             */
         }
     }
 }
+
